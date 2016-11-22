@@ -1,0 +1,19 @@
+language: python
+
+python:
+  - "2.7"
+  - "3.5"
+ 
+# command to install dependencies
+install:
+  - "pip install flake8 coveralls"
+
+# command to run tests
+script: 
+  - "flake8 --exclude=.virtualenv --ignore=E501"
+  
+after_success:
+  coveralls
+
+sudo: false
+cache: pip
