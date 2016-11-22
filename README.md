@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/daniellawrence/openrazer-python.svg?branch=master)](https://travis-ci.org/daniellawrence/openrazer-python)
+
 Python helpers for the OpenRazer Keyboard
 ==================================================
 
