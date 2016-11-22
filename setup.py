@@ -9,6 +9,6 @@ setup(
     author='Danny Lawrence',
     author_email='dannyla@linux.com',
     url='https://github.com/daniellawrence/openrazer-python',
-    packages=['graphitesend'],
+    packages=['openrazer'],
     long_description="https://github.com/daniellawrence/openrazer-python"
 )
