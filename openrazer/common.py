@@ -16,5 +16,5 @@ def tohex(color):
 
     if isinstance(color, tuple):
         return rgbtohex(color)
-    
+
     return color

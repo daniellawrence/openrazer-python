@@ -1,9 +1,5 @@
 #!/usr/bin/env python
-import pprint
-import time
 import glob
-import collections
-import copy
 
 from common import tohex
 
@@ -21,7 +17,6 @@ class Keyboard(object):
         found_devices = glob.glob(DEVICE_GLOB_PATH)
         self.mode_paths = glob.glob(MODES_GLOB_PATH)
         self.device = found_devices[0]
-        
         self.brightness_file = '{0.device}/brightness'.format(self)
         self.key_rows_file = '{0.device}/get_key_rows'.format(self)
         self.key_columns_file = '{0.device}/get_key_columns'.format(self)
@@ -115,7 +110,7 @@ class Keyboard(object):
             send = '\x01'
 
         elif len(colors) == 1:
-            send = '\x02' + tohex(color)
+            send = '\x02' + tohex(colors[0])
 
         elif len(colors) == 2:
             send = '\x03' + ''.join([tohex(color) for color in colors])
@@ -131,7 +126,7 @@ class Keyboard(object):
             send = '1'
 
         elif len(colors) == 1:
-            send = tohex(color)
+            send = tohex(colors[0])
 
         elif len(colors) == 2:
             send = ''.join([tohex(color) for color in colors])
