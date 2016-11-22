@@ -1,14 +1,19 @@
-#!/usr/bin/env python
-def rgbtohex(r, g, b):
-    return chr(r) + chr(g) + chr(b)
+""" Color things """
+
+
+def rgbtohex(red=None, green=None, blue=None):
+    """ Convert a (red, green, blue) tuple in to hex colors """
+    return chr(red) + chr(green) + chr(blue)
 
 
 def htmltohex(html_color):
-    rbg = tuple(map(ord, html_color.decode('hex')))
-    return rgbtohex(*rbg)
+    """ Conver html style HEX into python hex """
+    (red, green, blue) = tuple(map(ord, html_color.decode('hex')))
+    return rgbtohex(red, green, blue)
 
 
 def tohex(color):
+    """ convert anything to python style hex """
     length = len(color)
 
     if length == 6:

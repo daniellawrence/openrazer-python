@@ -6,11 +6,12 @@ python:
  
 # command to install dependencies
 install:
-  - "pip install flake8 coveralls"
+  - "pip install flake8 pylint coveralls"
 
 # command to run tests
 script: 
   - "flake8 --exclude=.virtualenv --ignore=E501"
+  - "pylint openrazer"
   
 after_success:
   coveralls

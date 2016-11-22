@@ -1,1 +1,2 @@
-from keyboard import keyboard  # noqa
+""" Open Razer Keyboard helpers """
+from openrazer.keyboard import keyboard  # noqa
