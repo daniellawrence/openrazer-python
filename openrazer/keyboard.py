@@ -180,7 +180,7 @@ class Keyboard(object):
         theme_string = ''
         off_color = tohex('000000')
         on_color = tohex(color)
-        for index in range(1, self.total_leds+1):
+        for index in range(1, self.total_leds + 1):
             if index in leds:
                 theme_string += on_color
             else:
