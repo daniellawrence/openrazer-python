@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from distutils.core import setup
+from setuptools import setup
 
 
 setup(
@@ -10,5 +10,10 @@ setup(
     author_email='dannyla@linux.com',
     url='https://github.com/daniellawrence/openrazer-python',
     packages=['openrazer'],
-    long_description="https://github.com/daniellawrence/openrazer-python"
+    long_description="https://github.com/daniellawrence/openrazer-python",
+    entry_points={
+        'console_scripts': [
+            'razercli = openrazer.cli:razer_cli',
+        ],
+    },
 )

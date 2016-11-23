@@ -1,6 +1,6 @@
 """ Open RazerKeyboard Helpers """
 import glob
-from openrazer.common import tohex
+from openrazer.common import tohex, KEY_MAP
 
 
 class Keyboard(object):
@@ -57,7 +57,7 @@ class Keyboard(object):
     @brightness.setter
     def brightness(self, value):
         """ Set the keyboard brightness """
-        with open(self.brightness_file, 'w') as device_file:
+        with open(self.brightness_file, 'wb') as device_file:
             device_file.write(str(value))
         return int(value)
 
@@ -87,26 +87,31 @@ class Keyboard(object):
             cols = device_file.read().strip()
         return int(cols)
 
+    @property
+    def total_leds(self):
+        """ Total number of LEDS on the keyboard """
+        return self.rows * self.columns
+
     def mode_none(self):
         """ Disable all modes """
         local_mode_file = self.mode_file.format('none')
 
-        with open(local_mode_file, 'w') as device_file:
+        with open(local_mode_file, 'wb') as device_file:
             device_file.write(str(1))
 
     def mode_custom(self):
         """ Use the custom mode """
         local_mode_file = self.mode_file.format('custom')
 
-        with open(local_mode_file, 'w') as device_file:
+        with open(local_mode_file, 'wb') as device_file:
             device_file.write(str(1))
 
-    def mode_static(self, color):
+    def mode_static(self, color='00FF00'):
         """ Set all the keyboard backlights to a single color"""
         local_mode_file = self.mode_file.format('static')
         hexcolor = tohex(color)
 
-        with open(local_mode_file, 'w') as device_file:
+        with open(local_mode_file, 'wb') as device_file:
             device_file.write(hexcolor)
 
     def mode_reactive(self, color):
@@ -114,7 +119,7 @@ class Keyboard(object):
         local_mode_file = self.mode_file.format('reactive')
         hexcolor = '\x02' + tohex(color)
 
-        with open(local_mode_file, 'w') as device_file:
+        with open(local_mode_file, 'wb') as device_file:
             device_file.write(hexcolor)
 
     def mode_starlight(self, colors=None):
@@ -131,7 +136,7 @@ class Keyboard(object):
         elif len(colors) == 2:
             send = '\x03' + ''.join([tohex(color) for color in colors])
 
-        with open(local_mode_file, 'w') as device_file:
+        with open(local_mode_file, 'wb') as device_file:
             device_file.write(send)
 
     def mode_breath(self, colors=None):
@@ -148,14 +153,14 @@ class Keyboard(object):
         elif len(colors) == 2:
             send = ''.join([tohex(color) for color in colors])
 
-        with open(local_mode_file, 'w') as device_file:
+        with open(local_mode_file, 'wb') as device_file:
             device_file.write(send)
 
     def mode_wave(self, state=2):
         """ Set mode to wave """
         local_mode_file = self.mode_file.format('wave')
 
-        with open(local_mode_file, 'w') as device_file:
+        with open(local_mode_file, 'wb') as device_file:
             device_file.write(str(state))
 
     def all_keys_off(self, color='000000'):
@@ -164,11 +169,39 @@ class Keyboard(object):
         off_color = tohex(color)
         all_off = off_color * total_keys
 
-        with open(self.set_key_color_file, 'w') as device_file:
+        with open(self.set_key_color_file, 'wb') as device_file:
             device_file.write(all_off)
+
+    def set_led_color(self, leds, color='ffffff'):
+        """ Set the color of a single LED """
+        if not isinstance(leds, list):
+            leds = [leds]
+
+        theme_string = ''
+        off_color = tohex('000000')
+        on_color = tohex(color)
+        for index in range(1, self.total_leds+1):
+            if index in leds:
+                theme_string += on_color
+            else:
+                theme_string += off_color
+        self.set_theme(theme_string)
+
+    def set_keys_color(self, keys, color='ffffff'):
+        """ Set the color of all the LEDs for one or many keys """
+        leds = []
+
+        if not isinstance(keys, list):
+            keys = [keys]
+
+        for key in keys:
+            key_leds = KEY_MAP.get(key, [])
+            leds += key_leds
+
+        self.set_led_color(leds, color)
 
     def set_theme(self, theme):
         """ Set key colors based on a theme """
         theme_string = str(theme)
-        with open(self.set_key_color_file, 'w') as device_file:
+        with open(self.set_key_color_file, 'wb') as device_file:
             device_file.write(theme_string)
