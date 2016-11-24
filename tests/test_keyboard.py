@@ -1,7 +1,7 @@
-from openrazer.keyboard import Keyboard
+from openrazer import keyboard
 
 
-def mock_glob(_, path):
+def mock_glob(path):
 
     if path == '/sys/bus/hid/drivers/hid-razer/*:*:*.*':
         return [
@@ -22,6 +22,6 @@ def mock_glob(_, path):
 
 
 def test_smoke():
-    Keyboard.glob = mock_glob
-    kb = Keyboard()
+    keyboard.glob.glob = mock_glob
+    kb = keyboard.Keyboard()
     assert kb.brightness_file == '/sys/bus/hid/drivers/hid-razer/0003:1532:020F.0003/brightness'

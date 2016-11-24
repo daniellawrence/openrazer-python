@@ -16,8 +16,8 @@ class Keyboard(object):
         device_glob_path = '{0}*:*:*.*'.format(base_device_path)
         modes_glob_path = '{0}/mode_*'.format(device_glob_path)
 
-        found_devices = self.glob(device_glob_path)
-        self.mode_paths = self.glob(modes_glob_path)
+        found_devices = glob.glob(device_glob_path)
+        self.mode_paths = glob.glob(modes_glob_path)
         self.device = found_devices[0]
         self.brightness_file = '{0.device}/brightness'.format(self)
         self.key_rows_file = '{0.device}/get_key_rows'.format(self)
@@ -26,10 +26,6 @@ class Keyboard(object):
         self.device_type_file = '{0.device}/device_type'.format(self)
         self.mode_file = '{0.device}/mode_{{0}}'.format(self)
         self.known_mode = None
-
-    def glob(self, path):
-        """ Glob wrapper to make testing testing """
-        return glob.glob(path)
 
     @property
     def modes(self):
