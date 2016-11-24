@@ -13,7 +13,8 @@ install:
 script: 
   - "flake8 --exclude=.virtualenv --ignore=E501"
   - "pylint openrazer"
-  
+  - "py.test --cov-report term-missing --cov=openrazer tests/"
+ 
 after_success:
   coveralls
 
