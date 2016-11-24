@@ -4,7 +4,25 @@
 Python helpers for the OpenRazer Keyboard
 ==================================================
 
-Examples
+In order to use this you need to have https://github.com/openrazer/openrazer-drivers setup and working.
+
+CLI Examples
+---------------
+
+Turn off the LEDs
+
+	$ razercli off
+	
+Turn all the LEDS to 'ffffff'
+
+	$ razercli static ffffff
+	
+Turn all the LEDS to salom
+
+	$ razercli static salom
+
+
+API Examples
 ---------
 
 Set brightness to 50
@@ -18,5 +36,3 @@ Set mode to reactive
     from openrazer import Keyboard
 	kb = Keyboard()
 	kb.mode_reactive('ff00ff')
-
-	

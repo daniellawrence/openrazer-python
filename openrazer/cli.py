@@ -15,3 +15,10 @@ def static(color):
     """ Set the mode to static, default color ff00ff """
     keyboard = Keyboard()
     keyboard.mode_static(color)
+
+
+@razer_cli.command()
+def off():
+    """ Set the mode to static, default color ff00ff """
+    keyboard = Keyboard()
+    keyboard.mode_none()

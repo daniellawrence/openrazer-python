@@ -97,14 +97,14 @@ class Keyboard(object):
         local_mode_file = self.mode_file.format('none')
 
         with open(local_mode_file, 'wb') as device_file:
-            device_file.write(str(1))
+            device_file.write(b'1')
 
     def mode_custom(self):
         """ Use the custom mode """
         local_mode_file = self.mode_file.format('custom')
 
         with open(local_mode_file, 'wb') as device_file:
-            device_file.write(str(1))
+            device_file.write(b'1')
 
     def mode_static(self, color='00FF00'):
         """ Set all the keyboard backlights to a single color"""
@@ -161,7 +161,7 @@ class Keyboard(object):
         local_mode_file = self.mode_file.format('wave')
 
         with open(local_mode_file, 'wb') as device_file:
-            device_file.write(str(state))
+            device_file.write(b'{0}'.format(state))
 
     def all_keys_off(self, color='000000'):
         """ Turn all the keys off(black) for custom mode """
@@ -202,6 +202,6 @@ class Keyboard(object):
 
     def set_theme(self, theme):
         """ Set key colors based on a theme """
-        theme_string = str(theme)
+        theme_string = bytes(theme)
         with open(self.set_key_color_file, 'wb') as device_file:
             device_file.write(theme_string)

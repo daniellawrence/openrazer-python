@@ -1,5 +1,7 @@
 """ Color things """
 import codecs
+from openrazer.colors import COMMON_COLORS
+
 
 KEY_MAP = {
     # top row
@@ -51,6 +53,7 @@ def htmltohex(html_color):
 
 def tohex(color):
     """ convert anything to python style hex """
+    color = COMMON_COLORS.get(color, color)
     length = len(color)
 
     if length == 6:
