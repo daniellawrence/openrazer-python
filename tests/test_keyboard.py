@@ -20,6 +20,8 @@ def mock_glob(path):
             '/sys/bus/hid/drivers/hid-razer/0003:1532:020F.0003/mode_spectrum'
         ]
 
+    return []
+
 
 def test_smoke():
     keyboard.glob.glob = mock_glob
