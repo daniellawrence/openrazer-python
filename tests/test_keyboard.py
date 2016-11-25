@@ -23,7 +23,15 @@ def mock_glob(path):
     return []
 
 
-def test_smoke():
-    keyboard.glob.glob = mock_glob
-    kb = keyboard.Keyboard()
+keyboard.glob.glob = mock_glob
+kb = keyboard.Keyboard()
+
+
+def test_brightness():
     assert kb.brightness_file == '/sys/bus/hid/drivers/hid-razer/0003:1532:020F.0003/brightness'
+
+
+def test_mode_list():
+    assert kb.modes == frozenset([
+        'breath', 'custom', 'none', 'reactive', 'spectrum', 'static', 'wave', 'starlight'
+    ])
