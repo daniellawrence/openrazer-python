@@ -3,6 +3,23 @@ import glob
 from openrazer.common import tohex, KEY_MAP
 
 
+def write_file(path, content):
+    """ Write a heap of bytes into a file found at path """
+    if not isinstance(content, bytes):
+        content = bytes(content)
+
+    with open(path, 'wb') as device_file:
+        device_file.write(value)
+
+    return value
+
+def read_file(path):
+    """ Read a file and return a string """
+    with open(path) as device_file:
+        data = path.read()
+        return data.strip()
+
+
 class Keyboard(object):
     """ Open RazerKeyboard """
 
@@ -39,9 +56,7 @@ class Keyboard(object):
     @property
     def device_type(self):
         """ return the device type """
-        with open(self.device_type_file) as device_file:
-            device_type = device_file.read().strip()
-        return device_type
+        return read_file(self.device_type_file)
 
     def __repr__(self):
         """ What is this keyboard """
@@ -50,16 +65,12 @@ class Keyboard(object):
     @property
     def brightness(self):
         """ Fetch the keyboard brightness """
-        with open(self.brightness_file) as device_file:
-            brightness = device_file.read().strip()
-        return int(brightness)
+        return int(read_file(self.brightness_file))
 
     @brightness.setter
     def brightness(self, value):
         """ Set the keyboard brightness """
-        with open(self.brightness_file, 'wb') as device_file:
-            device_file.write(str(value))
-        return int(value)
+        return write_file(self.brightness_file, value)
 
     def brightness_down(self, step=10):
         """ Decreate the brightness by 10 """
@@ -95,32 +106,26 @@ class Keyboard(object):
     def mode_none(self):
         """ Disable all modes """
         local_mode_file = self.mode_file.format('none')
-
-        with open(local_mode_file, 'wb') as device_file:
-            device_file.write(b'1')
+        enable_mode = b'1'
+        write_file(local_mode_file, enable_mode)
 
     def mode_custom(self):
         """ Use the custom mode """
         local_mode_file = self.mode_file.format('custom')
-
-        with open(local_mode_file, 'wb') as device_file:
-            device_file.write(b'1')
+        enable_mode = b'1'
+        write_file(local_mode_file, enable_mode)
 
     def mode_static(self, color='00FF00'):
         """ Set all the keyboard backlights to a single color"""
         local_mode_file = self.mode_file.format('static')
         hexcolor = tohex(color)
-
-        with open(local_mode_file, 'wb') as device_file:
-            device_file.write(hexcolor)
+        write_file(local_mode_file, hexcolor)
 
     def mode_reactive(self, color):
         """ Set the keyboard to reactive mode """
         local_mode_file = self.mode_file.format('reactive')
         hexcolor = '\x02' + tohex(color)
-
-        with open(local_mode_file, 'wb') as device_file:
-            device_file.write(hexcolor)
+        write_file(local_mode_file, hexcolor)
 
     def mode_starlight(self, colors=None):
         """ set the keyboard to starlight mode """
@@ -136,8 +141,7 @@ class Keyboard(object):
         elif len(colors) == 2:
             send = '\x03' + ''.join([tohex(color) for color in colors])
 
-        with open(local_mode_file, 'wb') as device_file:
-            device_file.write(send)
+        write_file(local_mode_file, send)
 
     def mode_breath(self, colors=None):
         """ Set mode to breath """
@@ -153,15 +157,13 @@ class Keyboard(object):
         elif len(colors) == 2:
             send = ''.join([tohex(color) for color in colors])
 
-        with open(local_mode_file, 'wb') as device_file:
-            device_file.write(send)
+        write_file(local_mode_file, send)
 
     def mode_wave(self, state=2):
         """ Set mode to wave """
         local_mode_file = self.mode_file.format('wave')
 
-        with open(local_mode_file, 'wb') as device_file:
-            device_file.write(b'{0}'.format(state))
+        write_file(local_mode_file, state)
 
     def all_keys_off(self, color='000000'):
         """ Turn all the keys off(black) for custom mode """
@@ -169,8 +171,7 @@ class Keyboard(object):
         off_color = tohex(color)
         all_off = off_color * total_keys
 
-        with open(self.set_key_color_file, 'wb') as device_file:
-            device_file.write(all_off)
+        write_file(self.set_keys_color, all_off)
 
     def set_led_color(self, leds, color='ffffff'):
         """ Set the color of a single LED """
@@ -203,5 +204,4 @@ class Keyboard(object):
     def set_theme(self, theme):
         """ Set key colors based on a theme """
         theme_string = bytes(theme)
-        with open(self.set_key_color_file, 'wb') as device_file:
-            device_file.write(theme_string)
+        write_file(self.set_key_color_file, theme_string)
