@@ -37,7 +37,7 @@ keyboard.read_file = mock_read_file
 kb = keyboard.Keyboard()
 
 
-def test_brightness():
+def test_brightness_file():
     assert kb.brightness_file == '/sys/bus/hid/drivers/hid-razer/0003:1532:020F.0003/brightness'
 
 

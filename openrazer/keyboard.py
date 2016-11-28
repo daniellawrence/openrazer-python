@@ -9,15 +9,18 @@ def write_file(path, content):
         content = bytes(content)
 
     with open(path, 'wb') as device_file:
-        device_file.write(value)
+        device_file.write(content)
 
-    return value
+    return content
+
 
 def read_file(path):
     """ Read a file and return a string """
     with open(path) as device_file:
-        data = path.read()
-        return data.strip()
+        data = device_file.read()
+        data = data.strip()
+
+    return data
 
 
 class Keyboard(object):
