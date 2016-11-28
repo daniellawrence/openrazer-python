@@ -53,3 +53,7 @@ def test_repr():
 
 def test_brightness():
     assert kb.brightness == 1
+
+
+def test_write_file():
+    assert keyboard.write_file('/tmp/none', str('string')) == 'string'
