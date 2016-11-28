@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/daniellawrence/openrazer-python.svg?branch=master)](https://travis-ci.org/daniellawrence/openrazer-python)
 [![Coverage Status](https://coveralls.io/repos/github/daniellawrence/openrazer-python/badge.svg?branch=master)](https://coveralls.io/github/daniellawrence/openrazer-python?branch=master)
+[![PyPi version](https://pypip.in/v/openrazer/badge.png)](https://crate.io/packages/openrazer/)
+[![PyPi downloads](https://pypip.in/d/openrazer/badge.png)](https://crate.io/packages/openrazer/)
 
 Python helpers for the OpenRazer Keyboard
 ==================================================
