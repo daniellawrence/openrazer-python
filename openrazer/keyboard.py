@@ -110,12 +110,12 @@ class Keyboard(object):
     def mode_none(self):
         """ Disable all modes """
         local_mode_file = self.mode_file.format('none')
-        write_file(local_mode_file, ENABLE)
+        write_file(local_mode_file, Keyboard.ENABLE)
 
     def mode_custom(self):
         """ Use the custom mode """
         local_mode_file = self.mode_file.format('custom')
-        write_file(local_mode_file, ENABLE)
+        write_file(local_mode_file, Keyboard.ENABLE)
 
     def mode_static(self, color='00FF00'):
         """ Set all the keyboard backlights to a single color"""
@@ -151,7 +151,7 @@ class Keyboard(object):
 
         send = None
         if not colors:
-            send = ENABLE
+            send = Keyboard.ENABLE
 
         elif len(colors) == 1:
             send = tohex(colors[0])
@@ -161,9 +161,9 @@ class Keyboard(object):
 
         write_file(local_mode_file, send)
 
-    def mode_wave(self, state=WAVE_LEFT):
+    def mode_wave(self, state=Keyboard.WAVE_LEFT):
         """ Set mode to wave """
-        assert state in [WAVE_LEFT, WAVE_RIGHT]
+        assert state in [Keyboard.WAVE_LEFT, Keyboard.WAVE_RIGHT]
         
         local_mode_file = self.mode_file.format('wave')
 
