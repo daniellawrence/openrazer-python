@@ -28,8 +28,9 @@ class Keyboard(object):
 
     # pylint: disable=too-many-instance-attributes
 
-    WAVE_LEFT = 1
-    WAVE_RIGHT = 2
+    WAVE_LEFT = b'1'
+    WAVE_RIGHT = b'2'
+    ENABLE = b'1'
 
     def __init__(self):
         base_device_path = "/sys/bus/hid/drivers/hid-razer/"
@@ -109,14 +110,12 @@ class Keyboard(object):
     def mode_none(self):
         """ Disable all modes """
         local_mode_file = self.mode_file.format('none')
-        enable_mode = b'1'
-        write_file(local_mode_file, enable_mode)
+        write_file(local_mode_file, ENABLE)
 
     def mode_custom(self):
         """ Use the custom mode """
         local_mode_file = self.mode_file.format('custom')
-        enable_mode = b'1'
-        write_file(local_mode_file, enable_mode)
+        write_file(local_mode_file, ENABLE)
 
     def mode_static(self, color='00FF00'):
         """ Set all the keyboard backlights to a single color"""
@@ -152,7 +151,7 @@ class Keyboard(object):
 
         send = None
         if not colors:
-            send = '1'
+            send = ENABLE
 
         elif len(colors) == 1:
             send = tohex(colors[0])
@@ -162,8 +161,10 @@ class Keyboard(object):
 
         write_file(local_mode_file, send)
 
-    def mode_wave(self, state=2):
+    def mode_wave(self, state=WAVE_LEFT):
         """ Set mode to wave """
+        assert state in [WAVE_LEFT, WAVE_RIGHT]
+        
         local_mode_file = self.mode_file.format('wave')
 
         write_file(local_mode_file, state)
